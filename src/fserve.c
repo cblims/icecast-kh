@@ -369,6 +369,14 @@ static fh_node *open_fh (fbinfo *finfo)
     if (fh->finfo.mount[0])
     {
         char *fullpath= util_get_path_from_normalised_uri (fh->finfo.mount, fh->finfo.flags&FS_USE_ADMIN);
+        int i;
+        for (i = 0; i < strlen(fullpath); ++i)
+        {
+            if ( fullpath[i] == '?' )
+            {
+                 fullpath[i] = '\0';
+            }
+        }
         char *contenttype = fserve_content_type (fullpath);
         format_type_t type = format_get_type (contenttype);
 
